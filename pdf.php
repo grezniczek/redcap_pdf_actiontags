@@ -41,13 +41,20 @@ if (!strlen(trim($render))) {
     die("Failed to extract render logic. Please contact the REDCap administrator.");
 }
 
+
+// Write PHP to temporary files.
+$guid = PDFActionTagsExternalModule::GUID();
+$prerenderFile = APP_PATH_TEMP . "{$module->PREFIX}_prerender_{$guid}.php";
+$renderFile = APP_PATH_TEMP . "{$module->PREFIX}_render_{$guid}.php";
+file_put_contents($prerenderFile, "<?php\n".$prerender);
+file_put_contents($renderFile, "<?php\n".$render);
+
 // Fix $_GET["page"].
 unset($_GET["page"]);
 if (isset($_GET["render_page"])) $_GET["page"] = $_GET["render_page"];
 
 // Preprocess.
-$Data = null;
-eval($prerender);
+require $prerenderFile;
 
 // Apply action tags.
 $metadata = PDFActionTagsExternalModule::applyActiontags($metadata, $Data);
@@ -69,4 +76,8 @@ $filename .= ".pdf";
 // Render PDF as download (this is necessary because renderPDF will output to a string if called this way).
 header("Content-type:application/pdf");
 header("Content-Disposition:attachment;filename={$filename}");
-eval($render);
+require $renderFile;
+
+// Remove temporary files.
+@unlink($prerenderFile);
+@unlink($renderFile);
