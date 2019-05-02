@@ -25,7 +25,7 @@ if ($handle) {
 
         if (strpos($line, "dirname(dirname(__FILE__))")) {
             // Fix require path.
-            $line = str_replace("dirname(dirname(__FILE__))", "'".trim(APP_PATH_DOCROOT, DS)."'", $line);
+            $line = str_replace("dirname(dirname(__FILE__))", "'".rtrim(APP_PATH_DOCROOT, DS)."'", $line);
         }
         // Add line.
         $$target .= $line;
