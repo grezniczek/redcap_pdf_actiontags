@@ -57,3 +57,9 @@ There are no configuration options besides those provided by the External Module
 - `@PDF-FIELDNOTEDATA="text"`
 
    This action tag only applies to 'form with saved data' PDFs. When set, it replaces the field note of a field with the text supplied as the parameter, but only when there is an actual data value present in the field.
+
+## Acknowledgements
+
+- This is the External Module-version of an [earlier project](https://github.com/grezniczek/redcap-pdf-actiontags) that required modification of the REDCap source code.
+
+- Thanks to Luke Stevens for suggesting how to implement this despite the lack of a _hook at the right place_.
