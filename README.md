@@ -1,4 +1,4 @@
-# REDCap PDF Action Tags
+# REDCap PDF @ActionTags
 
 A REDCap External Module that provides action tags for controlling PDF output.
 
