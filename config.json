@@ -2,6 +2,7 @@
     "name": "PDF @ActionTags",
     "namespace": "RUB\\PDFActionTagsExternalModule",
     "description": "Provides action tags for controlling PDF output. <strong><a href=\"https://github.com/grezniczek/redcap_pdf_actiontags\">See full documentation here</a></strong>.",
+    "tt_description": "desc",
     "authors": [
         {
             "name": "Günther Rezniczek",
