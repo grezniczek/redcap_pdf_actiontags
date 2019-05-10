@@ -73,10 +73,13 @@ if (isset($_GET['id']) || isset($_GET['allrecords'])) {
 }
 $filename .= ".pdf";
 
-// Render PDF as download (this is necessary because renderPDF will output to a string if called this way).
-header("Content-type:application/pdf");
-header("Content-Disposition:attachment;filename={$filename}");
+// Render PDF.
 require $renderFile;
+
+// Clear and set new headers (this is necessary because renderPDF as called here outputs a string).
+header_remove(); 
+header("Content-type:application/pdf");
+header("Content-Disposition:attachment; filename={$filename}");
 
 // Remove temporary files.
 @unlink($prerenderFile);

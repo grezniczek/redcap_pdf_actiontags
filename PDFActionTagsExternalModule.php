@@ -26,11 +26,12 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
             $(function() {
                 $('a[href*="PDF/index.php"]').each(function(index, el) {
                     const a = $(el)
-                    a.attr('href', a.attr('href').replace('<?php echo $search ?>', '<?php echo $pdfUrl ?>'))
+                    a.attr('href', a.attr('href').replace('<?=$search?>', '<?=$pdfUrl?>'))
                 })
                 $('a[onclick*="PDF/index.php"]').each(function(index, el) {
                     const a = $(el)
-                    a.attr('onclick', a.attr('onclick').replace("app_path_webroot+'PDF/index.php?pid='+pid+'&page", "'<?php echo $pdfUrl ?>render_page"))
+                    a.attr('onclick', a.attr('onclick').replace("app_path_webroot+'PDF/index.php?pid='+pid+'&page", "'<?=$pdfUrl?>render_page"))
+                    a.attr('onclick', a.attr('onclick').replace("app_path_webroot+'PDF/index.php?pid='+pid+'&", "'<?=$pdfUrl?>"))
                 })
             })
         </script>
@@ -81,96 +82,67 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
         // List of element types that support the @PDF-NOENUM actiontag
         $noenum_supported_types = array ( 'sql', 'select', 'radio' );
 
-        // 'form with saved data' or 'form (empty)' ?
-        $with_data = !(isset($Data['']) || empty($Data));
-
-        // Get an idea, where data values are present
-        $dv = array();
-        foreach ($metadata as $attr) {
-            $field_data_value = '';
-            if ($with_data) {
-                // Check specific value
-                foreach ($Data as $this_record => $event_data) {
-                    foreach ($event_data as $this_event_id => $field_data) {
-                        $field_data_value = $field_data[$attr['field_name']];
-                    }
-                }
-            }
-            // Store result; value or false when no value is present
-            $dv[$attr['field_name']] = $field_data_value != '' ? $field_data_value : false;
-        }
+        // Blank? ('form with saved data' or 'form (empty)')
+        $blank = (isset($Data['']) || empty($Data));
 
         $filtered_metadata = array();
         foreach ($metadata as $attr) {
 
-            $fieldname = $attr['field_name'];
+            $include = true;
 
-            // Only process other PDF action tags if @HIDDEN-PDF is _not_ present
-            if (strpos($attr['misc'], "@HIDDEN-PDF") === false) {
-
-                $include = true;
-
-                // @PDF-HIDDENNODATA
-                if ($include && strpos($attr['misc'], '@PDF-HIDDENNODATA') !== false) {
-                    // Supplied with parameter?
-                    if ($targetfield = self::getActiontagParam($attr['misc'], '@PDF-HIDDENNODATA')) {
-                        if (array_key_exists($targetfield, $dv)) {
-                            $include = $dv[$targetfield] !== false;
-                        }
-                    }
-                    else {
-                        $include = $with_data;
-                    }
+            // @HIDDEN-PDF/@PDF-HIDDEN
+            if ($include && strpos($attr['misc'], "@HIDDEN-PDF") !== false) {
+                // Get parameter value.
+                $param = strtolower(self::getActiontagParam($attr['misc'], '@HIDDEN-PDF'));
+                if ($param == "blank") {
+                    $include = !$blank;
                 }
-
-                // @PDF-HIDDENDATA
-                if ($include && strpos($attr['misc'], '@PDF-HIDDENDATA') !== false) {
-                    // Supplied with parameter?
-                    if ($targetfield = self::getActiontagParam($attr['misc'], '@PDF-HIDDENDATA')) {
-                        if (array_key_exists($targetfield, $dv)) {
-                            $include = !($dv[$targetfield] !== false);
-                        }
-                    }
-                    else {
-                        $include = !$with_data;
-                    }
+                else if ($param == "data") {
+                    $include = $blank;
                 }
-
-                // @PDF-WHITESPACE (only applies when there is no data present)
-                if ($include && $dv[$fieldname] === false && strpos($attr['misc'], '@PDF-WHITESPACE=') !== false) {
-                    // get parameter value
-                    $param = self::getActiontagParam($attr['misc'], '@PDF-WHITESPACE');
-                    if (is_numeric($param)) {
-                        $n = max(0, (int)$param); // no negativ values!
-                        // insert placeholder data
-                        $whitespace = str_repeat("\n", $n);
-                        $attr['element_label'] = $attr['element_label'].$whitespace;
-                    }
+                else {
+                    $include = false;
                 }
-
-                // @PDF-FIELDNOTEEMPTY
-                if ($include && !$with_data && strpos($attr['misc'], '@PDF-FIELDNOTEEMPTY=') !== false) {
-                    // get parameter value
-                    $note = self::getActiontagParam($attr['misc'], '@PDF-FIELDNOTEEMPTY');
-                    if ($note !== false) {
-                        $attr['element_note'] = "$note";
-                    }
+            } 
+            
+            if ($include && strpos($attr['misc'], "@PDF-HIDDEN") !== false) {
+                // Get parameter value.
+                $param = strtolower(self::getActiontagParam($attr['misc'], '@PDF-HIDDEN'));
+                if ($param == "blank") {
+                    $include = !$blank;
                 }
-
-                // @PDF-FIELDNOTEDATA
-                if ($include && $with_data && strpos($attr['misc'], '@PDF-FIELDNOTEDATA=') !== false) {
-                    // get parameter value
-                    $note = self::getActiontagParam($attr['misc'], '@PDF-FIELDNOTEDATA');
-                    if ($note !== false && $dv[$fieldname] !== false) { // only apply when actual data is present
-                        $attr['element_note'] = "$note";
-                    }
+                else if ($param == "data") {
+                    $include = $blank;
                 }
+                else {
+                    $include = false;
+                }
+            }
 
-                // @PDF-NOENUM
-                if ($include && strpos($attr['misc'], '@PDF-NOENUM') !== false && in_array($attr['element_type'], $noenum_supported_types)) {
-                    // check if data is present and if so, replace key values with data from the enums
-                    if ($dv[$fieldname] !== false) {
-                        // make the enum 'accessible'
+            // @PDF-WHITESPACE (only applies to blank PDFs)
+            if ($include && $blank && strpos($attr['misc'], '@PDF-WHITESPACE=') !== false) {
+                // Get parameter value.
+                $param = self::getActiontagParam($attr['misc'], '@PDF-WHITESPACE');
+                if (is_numeric($param)) {
+                    $n = max(0, (int)$param); // no negativ values!
+                    // insert placeholder data
+                    $whitespace = str_repeat("\n", $n);
+                    $attr['element_label'] = $attr['element_label'].$whitespace;
+                }
+            }
+
+            // @PDF-NOENUM
+            if ($include && strpos($attr['misc'], '@PDF-NOENUM') !== false && in_array($attr['element_type'], $noenum_supported_types)) {
+                // Get parameter value.
+                $param = strtolower(self::getActiontagParam($attr['misc'], '@PDF-NOENUM'));
+                // Should the action tag be applied?
+                $apply = true;
+                if ($param == "blank" && !$blank) $apply = false;
+                if ($param == "data" && $blank) $apply = false;
+                if ($apply) {
+                // Check if data is present and if so, replace key values with data from the enums.
+                    if (!$blank) {
+                        // Make the enum 'accessible'.
                         $enumvalues = array();
                         $lines = explode("\\n", $attr['element_enum']);
                         foreach ($lines as $l) {
@@ -179,7 +151,7 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
                             $value = trim($kv[1]);
                             $enumvalues[$key] = $value;
                         }
-                        // replace data value with text from enum
+                        // Replace data value with text from enum.
                         foreach ($Data as $this_record => &$event_data) {
                             foreach ($event_data as $this_event_id => &$field_data) {
                                 $keyvalue = $field_data[$attr['field_name']];
@@ -190,41 +162,32 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
                             }
                         }
                     }
-                    // Change element type to 'text' so a line is displayed in the PDF if there is no value
+                    // Change element type to 'text' so a line is displayed in the PDF if there is no value.
                     $attr['element_type'] = "text";
                 }
+            }
 
-                // @PDF-DATANOENUM
-                if ($include && strpos($attr['misc'], '@PDF-DATANOENUM') !== false && in_array($attr['element_type'], $noenum_supported_types)) {
-                    if ($dv[$fieldname] !== false) {
-                        // make the enum 'accessible'
-                        $enumvalues = array();
-                        $lines = explode("\\n", $attr['element_enum']);
-                        foreach ($lines as $l) {
-                            $kv = explode(",", $l, 2);
-                            $key = trim($kv[0]);
-                            $value = trim($kv[1]);
-                            $enumvalues[$key] = $value;
-                        }
-                        // replace data value with text from enum
-                        foreach ($Data as $this_record => &$event_data) {
-                            foreach ($event_data as $this_event_id => &$field_data) {
-                                $keyvalue = $field_data[$attr['field_name']];
-                                // if value is not blank
-                                if ($keyvalue != '') {
-                                    $field_data[$attr['field_name']] = $enumvalues[$keyvalue];
-                                }
-                            }
-                        }
-                        // Change element type to 'text' so a line is displayed in the PDF if there is no value
-                        $attr['element_type'] = "text";
-                    }
+            // @PDF-FIELDNOTE-BLANK (only applies to blank PDFs)
+            if ($include && $blank && strpos($attr['misc'], '@PDF-FIELDNOTE-BLANK=') !== false) {
+                // Get parameter value.
+                $note = self::getActiontagParam($attr['misc'], '@PDF-FIELDNOTE-BLANK');
+                if ($note !== false) {
+                    $attr['element_note'] = "$note";
                 }
+            }
 
-                // Conditionally add to the filtered metadata list
-                if ($include) {
-                    $filtered_metadata[] = $attr;
+            // @PDF-FIELDNOTE-DATA (only applies to PDFs with saved data)
+            if ($include && !$blank && strpos($attr['misc'], '@PDF-FIELDNOTE-DATA=') !== false) {
+                // Get parameter value.
+                $note = self::getActiontagParam($attr['misc'], '@PDF-FIELDNOTE-DATA');
+                if ($note !== false) {
+                    $attr['element_note'] = "$note";
                 }
+            }
+
+            // Conditionally add to the filtered metadata list
+            if ($include) {
+                $filtered_metadata[] = $attr;
             }
         }
         return $filtered_metadata;
