@@ -1,86 +1,74 @@
 <script>
     $(function() {
         // Add PDF Action Tag External Module info to the list of available action tags.
-        $(document).ajaxSuccess(function() {
-            $('#action_tag_explain_popup').append($('#{PREFIX}-info-tpl').html())
+        $(document).ajaxSuccess(function(e, jqXHR, options) {
+            if (options.url.includes('Design/action_tag_explain.php')) {
+                $('#action_tag_explain_popup').append($('#{PREFIX}-info-tpl').html())
+            }
         })
     })
 </script>
 <template id="{PREFIX}-info-tpl">
     <div style="margin:10px 0 5px;">
-        <b>Action tags provided by the <i>PDF @ActionTags</i> External Module:</b><table style="margin-top:1px;width:100%;border-bottom:1px solid #ccc;line-height:13px;">
-            <tbody><tr>
+        <b>Action tags provided by the <i>PDF @ActionTags</i> External Module:</b>
+        <table id="@PDFActionTags-TagInfo" style="margin-top:1px;width:100%;border-bottom:1px solid #ccc;line-height:13px;">
+            <tbody>
+                <tr>
+                    <td class="nowrap" style="text-align:center;background-color:#f5f5f5;color:#912B2B;padding:7px 15px 7px 12px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-right:0;">
+                        <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-HIDDEN '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add</button>
+                    </td>
+                    <td class="nowrap" style="background-color:#f5f5f5;color:#912B2B;padding:7px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-left:0;border-right:0;">@PDF-HIDDEN<br>&nbsp;<br>@HIDDEN-PDF</td>
+                    <td style="font-size:12px;background-color:#f5f5f5;padding:7px;border:1px solid #ccc;border-bottom:0;border-left:0;">
+                        When present, the field will not be shown on the PDF. A parameter can be supplied: <code>@PDF-HIDDEN="all|blank|data"</code>. By default, the parameter <code>all</code> is assumed (or when a parameter other than <code>blank</code> or <code>data</code> is given). When <code>blank</code> is specified, the field will be hidden on blank PDFs only. In case of <code>data</code>, the field will only be hidden on PDFs with data.<br>
+                        <code>@HIDDEN-PDF</code> can be used synonymously.
+                        <p>
+                            <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-HIDDEN=&quot;blank&quot; '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add 'blank'</button>
+                            <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-HIDDEN=&quot;data&quot; '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add 'data'</button>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="nowrap" style="text-align:center;background-color:#f5f5f5;color:#912B2B;padding:7px 15px 7px 12px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-right:0;">
+                        <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-NOENUM '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add</button>
+                    </td>
+                    <td class="nowrap" style="background-color:#f5f5f5;color:#912B2B;padding:7px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-left:0;border-right:0;">@PDF-NOENUM</td>
+                    <td style="font-size:12px;background-color:#f5f5f5;padding:7px;border:1px solid #ccc;border-bottom:0;border-left:0;">
+                        When present in a field (sql, select, radio), the enumeration of the list members will be suppressed. Instead, the field is shown as if it was a text field, i.e. it will be represented with an empty line. When a data value is present, the value will be preserved.<br>
+                        A parameter can be supplied: <code>@PDF-NOENUM="all|blank|data"</code>. This will limit the scope of this action tag to blank PDFs or PDFs with data only. All values other than <code>blank</code> and <code>data</code> are treated equivalent to <code>all</code>.
+                        <p>
+                            <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-NOENUM=&quot;blank&quot; '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add 'blank'</button>
+                            <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-NOENUM=&quot;data&quot; '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add 'data'</button>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="nowrap" style="text-align:center;background-color:#f5f5f5;color:#912B2B;padding:7px 15px 7px 12px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-right:0;">
+                        <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-FIELDNOTE-BLANK=&quot;text&quot; '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add</button>
+                    </td>
+                    <td class="nowrap" style="background-color:#f5f5f5;color:#912B2B;padding:7px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-left:0;border-right:0;">@PDF-FIELDNOTE-BLANK</td>
+                    <td style="font-size:12px;background-color:#f5f5f5;padding:7px;border:1px solid #ccc;border-bottom:0;border-left:0;">
+                        Use with a parameter: <code>@PDF-FIELDNOTE-BLANK="text"</code>. When present, the field note will be replaced by <i>text</i> <b>on blank PDFs only</b>.
+                    </td>
+                </tr>
+                <tr>
+                    <td class="nowrap" style="text-align:center;background-color:#f5f5f5;color:#912B2B;padding:7px 15px 7px 12px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-right:0;">
+                        <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-FIELDNOTE-DATA=&quot;text&quot; '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add</button>
+                    </td>
+                    <td class="nowrap" style="background-color:#f5f5f5;color:#912B2B;padding:7px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-left:0;border-right:0;">@PDF-FIELDNOTE-DATA</td>
+                    <td style="font-size:12px;background-color:#f5f5f5;padding:7px;border:1px solid #ccc;border-bottom:0;border-left:0;">
+                        Use with a parameter: <code>@PDF-FIELDNOTE-DATA="text"</code>. When present, the field note will be replaced by <i>text</i> <b>on PDFs with saved data only</b>.
+                    </td>
+                </tr>
+                <tr>
                 <td class="nowrap" style="text-align:center;background-color:#f5f5f5;color:#912B2B;padding:7px 15px 7px 12px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-right:0;">
-                    <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@HIDDEN-PDF '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add</button>
-                </td>
-                <td class="nowrap" style="background-color:#f5f5f5;color:#912B2B;padding:7px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-left:0;border-right:0;">@HIDDEN-PDF</td>
-                <td style="font-size:12px;background-color:#f5f5f5;padding:7px;border:1px solid #ccc;border-bottom:0;border-left:0;">
-                    When present, the field will not be shown on the PDF.
-                </td>
-            </tr>
-            <tr>
-                <td class="nowrap" style="text-align:center;background-color:#f5f5f5;color:#912B2B;padding:7px 15px 7px 12px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-right:0;">
-                    <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-HIDDENDATA '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add</button>
-                </td>
-                <td class="nowrap" style="background-color:#f5f5f5;color:#912B2B;padding:7px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-left:0;border-right:0;">@PDF-HIDDENDATA</td>
-                <td style="font-size:12px;background-color:#f5f5f5;padding:7px;border:1px solid #ccc;border-bottom:0;border-left:0;">
-                    Omits a field from the PDF for 'form with saved data' only. An optional parameter can be supplied: @PDF-HIDDENDATA="field_name". If the name of another field is supplied as parameter, the tagged field will be omitted from 'form with saved data' when actual data is present in the specified field.
-                </td>
-            </tr>
-            <tr>
-                <td class="nowrap" style="text-align:center;background-color:#f5f5f5;color:#912B2B;padding:7px 15px 7px 12px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-right:0;">
-                    <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-HIDDENNODATA '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add</button>
-                </td>
-                <td class="nowrap" style="background-color:#f5f5f5;color:#912B2B;padding:7px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-left:0;border-right:0;">@PDF-HIDDENNODATA</td>
-                <td style="font-size:12px;background-color:#f5f5f5;padding:7px;border:1px solid #ccc;border-bottom:0;border-left:0;">
-                    Omits a field from the PDF for 'form (empty)' or, when used with a parameter (@PDF-HIDDENNODATA="field_name"), for 'form with saved data' when no actual data is present in the field specified in the parameter.
-                </td>
-            </tr>
-            <tr>
-                <td class="nowrap" style="text-align:center;background-color:#f5f5f5;color:#912B2B;padding:7px 15px 7px 12px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-right:0;">
-                    <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-NOENUM '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add</button>
-                </td>
-                <td class="nowrap" style="background-color:#f5f5f5;color:#912B2B;padding:7px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-left:0;border-right:0;">@PDF-NOENUM</td>
-                <td style="font-size:12px;background-color:#f5f5f5;padding:7px;border:1px solid #ccc;border-bottom:0;border-left:0;">
-                    When present in a field (sql, select, radio), the enumeration of the list members will be suppressed. Instead, the field is shown as if it was a text field, i.e. it will be represented with an empty line. When a data value is present, the value will be preserved.
-                </td>
-            </tr>
-            <tr>
-                <td class="nowrap" style="text-align:center;background-color:#f5f5f5;color:#912B2B;padding:7px 15px 7px 12px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-right:0;">
-                    <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-DATANOENUM '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add</button>
-                </td>
-                <td class="nowrap" style="background-color:#f5f5f5;color:#912B2B;padding:7px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-left:0;border-right:0;">@PDF-DATANOENUM</td>
-                <td style="font-size:12px;background-color:#f5f5f5;padding:7px;border:1px solid #ccc;border-bottom:0;border-left:0;">
-                    Behaves like @PDF-NOENUM, but only applies to 'form with saved data'.
-                </td>
-            </tr>
-            <tr>
-                <td class="nowrap" style="text-align:center;background-color:#f5f5f5;color:#912B2B;padding:7px 15px 7px 12px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-right:0;">
-                    <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-WHITESPACE=&quot;1&quot; '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add</button>
-                </td>
-                <td class="nowrap" style="background-color:#f5f5f5;color:#912B2B;padding:7px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-left:0;border-right:0;">@PDF-WHITESPACE</td>
-                <td style="font-size:12px;background-color:#f5f5f5;padding:7px;border:1px solid #ccc;border-bottom:0;border-left:0;">
-                    Always use with a parameter (@PDF-WHITESPACE="number of lines"). This action tag only applies to 'form (empty)' PDFs. If present, it will add the given number of empty lines to a field's label, pushing down the next field on the page. 'number of lines' must be a positive integer.
-                </td>
-            </tr>
-            <tr>
-                <td class="nowrap" style="text-align:center;background-color:#f5f5f5;color:#912B2B;padding:7px 15px 7px 12px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-right:0;">
-                    <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-FIELDNOTEEMPTY=&quot;Field-note override&quot; '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add</button>
-                </td>
-                <td class="nowrap" style="background-color:#f5f5f5;color:#912B2B;padding:7px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-left:0;border-right:0;">@PDF-FIELDNOTEEMPTY</td>
-                <td style="font-size:12px;background-color:#f5f5f5;padding:7px;border:1px solid #ccc;border-bottom:0;border-left:0;">
-                    Always use with a parameter (@PDF-FIELDNOTEEMPTY="text"). This action tag only applies to 'form (empty)' PDFs. When set, it replaces the field note of a field with the text supplied as parameter.
-                </td>
-            </tr>
-            <tr>
-                <td class="nowrap" style="text-align:center;background-color:#f5f5f5;color:#912B2B;padding:7px 15px 7px 12px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-right:0;">
-                    <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-FIELDNOTEDATA=&quot;Field-note override&quot; '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add</button>
-                </td>
-                <td class="nowrap" style="background-color:#f5f5f5;color:#912B2B;padding:7px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-left:0;border-right:0;">@PDF-FIELDNOTEDATA</td>
-                <td style="font-size:12px;background-color:#f5f5f5;padding:7px;border:1px solid #ccc;border-bottom:0;border-left:0;">
-                    Always use with a parameter (@PDF-FIELDNOTEDATA="text"). This action tag only applies to 'form with saved data' PDFs. When set, it replaces the field note of a field with the text supplied as the parameter, but only when there is an actual data value present in the field.
-                </td>
-            </tr>
-        </tbody></table>
+                        <button class="btn btn-xs btn-rcred" onclick="$('#field_annotation').val(trim('@PDF-WHITESPACE=&quot;1&quot; '+$('#field_annotation').val())); highlightTableRowOb($(this).parentsUntil('tr').parent(),2500);">Add</button>
+                    </td>
+                    <td class="nowrap" style="background-color:#f5f5f5;color:#912B2B;padding:7px;font-weight:bold;border:1px solid #ccc;border-bottom:0;border-left:0;border-right:0;">@PDF-WHITESPACE</td>
+                    <td style="font-size:12px;background-color:#f5f5f5;padding:7px;border:1px solid #ccc;border-bottom:0;border-left:0;">
+                        Always use with a parameter: <code>@PDF-WHITESPACE="number of lines"</code>. If present, it will add the given number of empty lines to a field's label, pushing down the next field on the page. 'number of lines' must be a positive integer. <b>This action tag only applies blank PDFs.</b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
