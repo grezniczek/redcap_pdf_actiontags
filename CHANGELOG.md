@@ -2,9 +2,11 @@
 
 ## CHANGELOG
 
-### Version (unreleased)
+### Version 1.1.1
 
-- Starting with REDCap >9.0.1, it seems the output of pages gets gzip'ed, including the PDFs generated when this module is active. This is now prevented by turning compression off in the PHP script.
+- Bugfixes
+  - Fixed 404 error encountered when REDCap is installed in a subfolder of the webroot.
+  - Starting with REDCap >9.0.1, it seems the output of pages gets gzip'ed, including the PDFs generated when this module is active. This is now prevented by turning compression off in the PHP script.
 
 ### Version 1.1.0
 
