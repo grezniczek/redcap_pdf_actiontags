@@ -2,6 +2,10 @@
 
 ## CHANGELOG
 
+### Version (unreleased)
+
+- Starting with REDCap >9.0.1, it seems the output of pages gets gzip'ed, including the PDFs generated when this module is active. This is now prevented by turning compression off in the PHP script.
+
 ### Version 1.1.0
 
 - Breaking Changes
