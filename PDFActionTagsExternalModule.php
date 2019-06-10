@@ -18,7 +18,9 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
         if ($project_id < 1) return;
 
         // Inject JS into project pages that redirects all PDF links to this module.
-        $pdfUrl = str_replace(APP_PATH_WEBROOT_FULL, "/", $this->getUrl("pdf.php")) . "&";
+        $pdfUrlPrefix = dirname(APP_PATH_WEBROOT);
+        $pdfUrlPrefix = strlen($pdfUrlPrefix) > 1 ? $pdfUrlPrefix : "";
+        $pdfUrl = $pdfUrlPrefix . str_replace(APP_PATH_WEBROOT_FULL, "/", $this->getUrl("pdf.php")) . "&";
         $search = APP_PATH_WEBROOT . "PDF/index.php?pid={$project_id}";
 ?>
         <script>
