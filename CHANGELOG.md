@@ -2,6 +2,11 @@
 
 ## CHANGELOG
 
+### Version 1.1.2
+
+- Bugfixes
+  - Fixed broken PDF links within the Online Designer.
+
 ### Version 1.1.1
 
 - Bugfixes
