@@ -17,14 +17,32 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
         $project_id = empty($project_id) ? 0 : is_numeric($project_id) ? intval($project_id) : 0;
         if ($project_id < 1) return;
 
-        // Inject JS into project pages that redirects all PDF links to this module.
+        // Inject JS into project pages that redirects all PDF links to this module ...
         $pdfUrlPrefix = dirname(APP_PATH_WEBROOT);
         $pdfUrlPrefix = strlen($pdfUrlPrefix) > 1 ? $pdfUrlPrefix : "";
         $pdfUrl = $pdfUrlPrefix . str_replace(APP_PATH_WEBROOT_FULL, "/", $this->getUrl("pdf.php")) . "&";
         $search = APP_PATH_WEBROOT . "PDF/index.php?pid={$project_id}";
+
+        // ... depending on the type of page we are on.
+        if (strpos(PAGE_FULL, "/Design/online_designer.php") !== false) {
+            $search .= "&page=";
+            $pdfUrl .= "render_page=";
 ?>
         <script>
-            // PDF Action Tags External Module
+            // PDF Action Tags External Module (Designer)
+            $(function() {
+                $('a[href*="PDF/index.php"]').each(function(index, el) {
+                    const a = $(el)
+                    a.attr('href', a.attr('href').replace('<?=$search?>', '<?=$pdfUrl?>'))
+                })
+            })
+        </script>
+<?php
+        }
+        else {
+?>
+        <script>
+            // PDF Action Tags External Module (Data Entry)
             $(function() {
                 $('a[href*="PDF/index.php"]').each(function(index, el) {
                     const a = $(el)
@@ -38,6 +56,7 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
             })
         </script>
 <?php
+        }
         // Insert the action tag descriptions (only on Design)
         if (strpos(PAGE_FULL, "/Design/online_designer.php") !== false) {
             $template = file_get_contents(dirname(__FILE__)."/actiontags_info.html");
