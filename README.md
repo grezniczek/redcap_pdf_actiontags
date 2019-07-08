@@ -14,7 +14,8 @@ This module redirects links to PDF/index.php to itself. It replicates the functi
 
 ## Limitations
 
-As this module can only replace the calls to PDF/index.php in links displayed on various pages, users could still craft links to PDF/index.php and thus get access to PDFs which are not processed by this module. Thus, using this module **is not a safe way to protect sensible data**.
+- As this module can only replace the calls to PDF/index.php in links displayed on various pages, users could still craft links to PDF/index.php and thus get access to PDFs which are not processed by this module. Thus, using this module **is not a safe way to protect sensible data**.
+- PDFs downloadable at the end of surveys cannot be modified, as the passthrough mechanism from surveys prevents this EM from being injected there.
 
 ## Installation
 
