@@ -15,7 +15,7 @@ if (!$ok) {
 @ini_set('zlib.output_compression', 'Off');
 @ini_set('output_buffering', 'Off');
 @ini_set('output_handler', '');
-@apache_setenv('no-gzip', 1);
+if (function_exists('apache_setenv')) @apache_setenv('no-gzip', 1);
 
 // Get the original PDF/index.php and split into pre-render and render.
 $prerender = "";

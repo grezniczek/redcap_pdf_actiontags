@@ -2,6 +2,11 @@
 
 ## CHANGELOG
 
+### Version 1.1.3
+
+- Bugfixes
+  - Added check to see if 'apache_setenv()' is available before calling it.
+
 ### Version 1.1.2
 
 - Bugfixes
