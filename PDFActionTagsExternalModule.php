@@ -9,64 +9,45 @@ use ExternalModules\AbstractExternalModule;
  */
 class PDFActionTagsExternalModule extends AbstractExternalModule {
 
-    public $IDENTITY = "27af2aea-2563-4a5e-9c33-748c89d1cb15";
-
     function redcap_every_page_top($project_id = null) {
 
         // Do not run on non-project pages.
         $project_id = empty($project_id) ? 0 : is_numeric($project_id) ? intval($project_id) : 0;
         if ($project_id < 1) return;
 
-        // Inject JS into project pages that redirects all PDF links to this module ...
-        $pdfUrlPrefix = dirname(APP_PATH_WEBROOT);
-        $pdfUrlPrefix = strlen($pdfUrlPrefix) > 1 ? $pdfUrlPrefix : "";
-        $pdfUrl = $pdfUrlPrefix . str_replace(APP_PATH_WEBROOT_FULL, "/", $this->getUrl("pdf.php")) . "&";
-        $search = APP_PATH_WEBROOT . "PDF/index.php?pid={$project_id}";
-
-        // ... depending on the type of page we are on.
-        if (strpos(PAGE_FULL, "/Design/online_designer.php") !== false) {
-            $search .= "&page=";
-            $pdfUrl .= "render_page=";
-?>
-        <script>
-            // PDF Action Tags External Module (Designer)
-            $(function() {
-                $('a[href*="PDF/index.php"]').each(function(index, el) {
-                    const a = $(el)
-                    a.attr('href', a.attr('href').replace('<?=$search?>', '<?=$pdfUrl?>'))
-                })
-            })
-        </script>
-<?php
-        }
-        else {
-?>
-        <script>
-            // PDF Action Tags External Module (Data Entry)
-            $(function() {
-                $('a[href*="PDF/index.php"]').each(function(index, el) {
-                    const a = $(el)
-                    a.attr('href', a.attr('href').replace('<?=$search?>', '<?=$pdfUrl?>'))
-                })
-                $('a[onclick*="PDF/index.php"]').each(function(index, el) {
-                    const a = $(el)
-                    a.attr('onclick', a.attr('onclick').replace("app_path_webroot+'PDF/index.php?pid='+pid+'&page", "'<?=$pdfUrl?>render_page"))
-                    a.attr('onclick', a.attr('onclick').replace("app_path_webroot+'PDF/index.php?pid='+pid+'&", "'<?=$pdfUrl?>"))
-                })
-            })
-        </script>
-<?php
-        }
         // Insert the action tag descriptions (only on Design)
         if (strpos(PAGE_FULL, "/Design/online_designer.php") !== false) {
             $template = file_get_contents(dirname(__FILE__)."/actiontags_info.html");
             $replace = array(
-                "{PREFIX}" => $this->PREFIX
+                "{PREFIX}" => $this->PREFIX,
+                "{HELPTITLE}" => $this->tt("helptitle"),
+                "{ADD}" => $this->tt("button_add"),
+                "{PDF-HIDDEN}" => $this->tt("pdf_hidden_desc"),
+                "{PDF-NOENUM}" => $this->tt("pdf_noenum_desc"),
+                "{PDF-FIELDNOTE-BLANK}" => $this->tt("pdf_fieldnote_blank_desc"),
+                "{PDF-FIELDNOTE-DATA}" => $this->tt("pdf_fieldnote_data_desc"),
+                "{PDF-WHITESPACE}" => $this->tt("pdf_whitespace_desc")
             );
             print str_replace(array_keys($replace), array_values($replace), $template);
         }
     }
 
+    /**
+     * Allows for the interception of a PDF being generated or the manipulation of the $metadata or $data arrays that will be used to generate the PDF.
+     * @param int $project_id The project ID number of the REDCap project.
+     * @param array $metadata The metadata array that will be passed to the renderPDF() function for building the content structure of the PDF.
+     * @param array $data The data array that will be passed to the renderPDF() function for injecting stored data values into the content structure of the PDF to display the data from one or more records in the project.
+     * @param string $instrument The unique form name of the instrument being exported as a PDF. Note: If instrument=NULL, this implies that ALL instruments in the project will be included in the PDF.
+     * @param string $record The name of the single record whose data will be included in the PDF. Note: If record=NULL, this implies a blank PDF is being exported (i.e., with no record data).
+     * @param int $event_id The current event_id for the record whose data will be included in the PDF.
+     * @param int $instance The repeating instance number of the current repeating instrument/event for the record whose data will be included in the PDF.
+     */
+    function redcap_pdf($project_id, $metadata, $data, $instrument, $record, $event_id, $instance = 1) {
+
+        $metadata = self::applyActiontags($metadata, $data);
+
+        return array('metadata'=>$metadata, 'data'=>$data);
+    }
 
     /**
      * Extracts the parameter of an action tag
@@ -98,7 +79,7 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
      * @param $Data array The data array from redcap/PDF/index.php
      * @return array A filtered metadata arry. Use this to replace $metadata just before passing to renderPDF at the bottom of redcap/PDF/index.php
      */
-    public static function applyActiontags($metadata, &$Data)
+    private static function applyActiontags($metadata, &$Data)
     {
         // List of element types that support the @PDF-NOENUM actiontag
         $noenum_supported_types = array ( 'sql', 'select', 'radio' );
@@ -113,19 +94,8 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
 
             // @HIDDEN-PDF/@PDF-HIDDEN
             if ($include && strpos($attr['misc'], "@HIDDEN-PDF") !== false) {
-                // Get parameter value.
-                $param = strtolower(self::getActiontagParam($attr['misc'], '@HIDDEN-PDF'));
-                if ($param == "blank") {
-                    $include = !$blank;
-                }
-                else if ($param == "data") {
-                    $include = $blank;
-                }
-                else {
-                    $include = false;
-                }
+                $include = false;
             } 
-            
             if ($include && strpos($attr['misc'], "@PDF-HIDDEN") !== false) {
                 // Get parameter value.
                 $param = strtolower(self::getActiontagParam($attr['misc'], '@PDF-HIDDEN'));
@@ -148,7 +118,7 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
                     $n = max(0, (int)$param); // no negativ values!
                     // insert placeholder data
                     $whitespace = str_repeat("\n", $n);
-                    $attr['element_label'] = $attr['element_label'].$whitespace;
+                    $attr['element_label'] = $attr['element_label'].$whitespace . "&nbsp;";
                 }
             }
 
@@ -213,17 +183,4 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
         }
         return $filtered_metadata;
     }
-
-    /**
-     * Generates a GUID in the format xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.
-     */
-    public static function GUID() 
-    {
-        if (function_exists('com_create_guid') === true) {
-            return strtolower(trim(com_create_guid(), '{}'));
-        }
-        return strtolower(sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535)));
-    }
-
-
 }
