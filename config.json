@@ -1,7 +1,7 @@
 {
     "name": "PDF @ActionTags",
     "namespace": "RUB\\PDFActionTagsExternalModule",
-    "description": "Provides action tags for controlling PDF output. <strong><a href=\"https://github.com/grezniczek/redcap_pdf_actiontags\">See full documentation here</a></strong>.",
+    "description": "Provides additional action tags for controlling PDF output. <strong><a href=\"https://github.com/grezniczek/redcap_pdf_actiontags\">See full documentation here</a></strong>.",
     "tt_description": "desc",
     "authors": [
         {
@@ -10,10 +10,11 @@
             "institution": "Ruhr-Universität Bochum"
         }
     ],
+    "framework-version": 3,
     "permissions": [
-        "redcap_every_page_top"
+        "redcap_every_page_top",
+        "redcap_pdf"
     ],
-    "enable-every-page-hooks-on-system-pages": true,
     "system-settings": [
     ],
     "project-settings": [
@@ -21,7 +22,7 @@
     "compatibility": {
         "php-version-min": "5.6.0",
         "php-version-max": "",
-        "redcap-version-min": "8.1.0",
+        "redcap-version-min": "9.5.0",
         "redcap-version-max": ""
      }
 }
