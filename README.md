@@ -2,20 +2,19 @@
 
 A REDCap External Module that provides action tags for controlling PDF output.
 
-Please see the [CHANGLOG](CHANGELOG.md) to learn about changes and bugfixes. Version 1.1.0 introduced some **breaking** changes.
+Please see the [CHANGELOG](?prefix=redcap_pdf_actiontags&page=CHANGELOG.md) to learn about changes and bugfixes. Version 2.0.0 takes advantage of the new `redcap_pdf` hook, which removed all previous limitations.
+
+**Note**, however, that through the introduction of the _native_ `@HIDDEN-PDF` action tag, the one provided by this module will not work when used with the `blank` or `data` modifier (as the REDCap-provided action tag will force this to always be `all`). Thus, if you have been using this tag with one of those modifiers, replace it with the alternative `@PDF-HIDDEN`.
+
+To test the features of this module, use this [test project](?prefix=redcap_pdf_actiontags&page=Demo/TestProject.xml) (XML metadata and data).
 
 ## Requirements
 
-- REDCAP 8.1.0 or newer (tested with REDCap 8.11.11 and 9.0.0).
+- REDCAP 9.5.0 or newer.
 
 ## How It Works
 
-This module redirects links to PDF/index.php to itself. It replicates the functionality of PDF/index.php, but adds some additional logic to process any PDF action tags, thereby modifying the data and metadata used to generate the PDF.
-
-## Limitations
-
-- As this module can only replace the calls to PDF/index.php in links displayed on various pages, users could still craft links to PDF/index.php and thus get access to PDFs which are not processed by this module. Thus, using this module **is not a safe way to protect sensible data**.
-- PDFs downloadable at the end of surveys cannot be modified, as the passthrough mechanism from surveys prevents this EM from being injected there.
+This module intercepts calls to the PDF generating function of REDCap and modifies the data dictionary and/or the data to fit what has been set via the action tags provided by this module.
 
 ## Installation
 
@@ -29,11 +28,11 @@ There are no configuration options besides those provided by the External Module
 
 ## Action Tags
 
-Note, some action tags will only affect rendering of _blank_ PDFs and will not work when data is present!
+Note, some action tags will only affect rendering of _blank_ PDFs and will not work when data is present! Furthermore, _compact_ PDFs will override/supersede some of these settings (e.g., enumerations will be reduced always, and fields with blank values are not shown).
 
-- `@PDF-HIDDEN="all|blank|data"` or `@HIDDEN-PDF="all|blank|data"`
+- `@PDF-HIDDEN="all|blank|data"`
 
-  When present, the field will not be shown on the PDF. By default, the parameter `all` is assumed (or when a parameter other than _blank_ or _data_ is given). When `blank` is specified, the field will be hidden on blank PDFs only. In case of `data`, the field will only be hidden on PDFs with data.
+  When present, the field will not be shown on the PDF. By default, the parameter `all` is assumed (or when a parameter other than _blank_ or _data_ is given; this is synonymous to REDCap's built-in `@HIDDEN-PDF`). When `blank` is specified, the field will be hidden on blank PDFs only. In case of `data`, the field will only be hidden on PDFs with data.
 
 - `@PDF-NOENUM="all|blank|data"`
 
@@ -52,9 +51,3 @@ Note, some action tags will only affect rendering of _blank_ PDFs and will not w
 - `@PDF-WHITESPACE="number of lines"`
 
   When present, the given number of empty lines will be added to a field's label, pushing down the next field on the page. The number of lines must be a positive integer. **This action tag only affects blank PDFs!**
-
-## Acknowledgements
-
-- This is the External Module-version of an [earlier project](https://github.com/grezniczek/redcap-pdf-actiontags) that required modification of the REDCap source code.
-
-- Thanks to Luke Stevens for suggesting how to implement this despite the lack of a _hook at the right place_.
