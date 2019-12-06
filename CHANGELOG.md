@@ -2,6 +2,10 @@
 
 ## CHANGELOG
 
+### Version 2.0.0
+
+- Uses the new `redcap_pdf` hook that became available with REDCap 9.5.0. This means, the module works now in _any_ context.
+
 ### Version 1.1.3
 
 - Bugfixes
