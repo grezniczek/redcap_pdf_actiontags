@@ -116,7 +116,7 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
                 // Get parameter value.
                 $param = self::getActiontagParam($attr['misc'], '@PDF-WHITESPACE');
                 if (is_numeric($param)) {
-                    $n = max(0, (int)$param); // no negativ values!
+                    $n = max(0, (int)$param); // no negative values!
                     // insert placeholder data
                     $whitespace = str_repeat("\n", $n);
                     $attr['element_label'] = $attr['element_label'].$whitespace . "&nbsp;";
@@ -125,7 +125,7 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
             
             // @PDF-INDENT
             if ($include && strpos($attr['misc'], '@PDF-INDENT=') !== false) {
-                // Get parameter values from array
+                // Get parameter values array
                 $params = explode(",", self::getActiontagParam($attr['misc'], '@PDF-INDENT'));
 				$param1 = $params[0]; //number of spaces to indent
 				$param2 = $params[1]; //number of characters wide
