@@ -1,48 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redcap="https://projectredcap.org" xsi:schemaLocation="http://www.cdisc.org/ns/odm/v1.3 schema/odm/ODM1-3-1.xsd" ODMVersion="1.3.1" FileOID="000-00-0000" FileType="Snapshot" Description="PDF Action Tags Demo" AsOfDateTime="2019-12-06T11:35:11" CreationDateTime="2019-12-06T11:35:11" SourceSystem="REDCap" SourceSystemVersion="9.5.0">
-<Study OID="Project.PDFActionTagsDemo">
+<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redcap="https://projectredcap.org" xsi:schemaLocation="http://www.cdisc.org/ns/odm/v1.3 schema/odm/ODM1-3-1.xsd" ODMVersion="1.3.1" FileOID="000-00-0000" FileType="Snapshot" Description="PDF @ActionTags Test" AsOfDateTime="2020-04-13T23:35:03" CreationDateTime="2020-04-13T23:35:03" SourceSystem="REDCap" SourceSystemVersion="9.8.2">
+<Study OID="Project.PDFActionTagsTest">
 <GlobalVariables>
-	<StudyName>PDF Action Tags Demo</StudyName>
-	<StudyDescription>This file contains the metadata, events, and data for REDCap project "PDF Action Tags Demo".</StudyDescription>
-	<ProtocolName>PDF Action Tags Demo</ProtocolName>
+	<StudyName>PDF @ActionTags Test</StudyName>
+	<StudyDescription>This file contains the metadata, events, and data for REDCap project "PDF @ActionTags Test".</StudyDescription>
+	<ProtocolName>PDF @ActionTags Test</ProtocolName>
 	<redcap:RecordAutonumberingEnabled>1</redcap:RecordAutonumberingEnabled>
 	<redcap:CustomRecordLabel>[testcase]</redcap:CustomRecordLabel>
 	<redcap:SecondaryUniqueField></redcap:SecondaryUniqueField>
 	<redcap:SchedulingEnabled>0</redcap:SchedulingEnabled>
 	<redcap:SurveysEnabled>1</redcap:SurveysEnabled>
 	<redcap:SurveyInvitationEmailField></redcap:SurveyInvitationEmailField>
-	<redcap:Purpose>0</redcap:Purpose>
+	<redcap:Purpose>4</redcap:Purpose>
 	<redcap:PurposeOther></redcap:PurposeOther>
 	<redcap:ProjectNotes></redcap:ProjectNotes>
 	<redcap:MissingDataCodes></redcap:MissingDataCodes>
 	<redcap:RepeatingInstrumentsAndEvents>
+		<redcap:RepeatingEvent redcap:UniqueEventName="repeating_arm_1"/>
 		<redcap:RepeatingInstruments>
-			<redcap:RepeatingInstrument redcap:UniqueEventName="event_1_arm_1" redcap:RepeatInstrument="second_instrument" redcap:CustomLabel=""/>
+			<redcap:RepeatingInstrument redcap:UniqueEventName="nonrepeating_arm_1" redcap:RepeatInstrument="second_instrument" redcap:CustomLabel=""/>
 		</redcap:RepeatingInstruments>
 	</redcap:RepeatingInstrumentsAndEvents>
 	<redcap:SurveysGroup>
-		<redcap:Surveys form_name="my_first_instrument" title="My First Instrument" instructions="&lt;p&gt;&lt;strong&gt;Please complete the survey below.&lt;/strong&gt;&lt;/p&gt;
+		<redcap:Surveys form_name="first_instrument" title="First Instrument" instructions="&lt;p&gt;&lt;strong&gt;Please complete the survey below.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Thank you!&lt;/p&gt;" acknowledgement="&lt;p&gt;&lt;strong&gt;Thank you for taking the survey.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Have a nice day!&lt;/p&gt;" question_by_section="0" display_page_number="0" question_auto_numbering="1" survey_enabled="1" save_and_return="0" save_and_return_code_bypass="0" logo="" hide_title="0" view_results="0" min_responses_view_results="10" check_diversity_view_results="0" end_survey_redirect_url="" survey_expiration="" promis_skip_question="0" survey_auth_enabled_single="0" edit_completed_response="0" hide_back_button="0" show_required_field_text="1" confirmation_email_subject="" confirmation_email_content="" confirmation_email_from="" confirmation_email_from_display="" confirmation_email_attach_pdf="0" confirmation_email_attachment="" text_to_speech="0" text_to_speech_language="en" end_survey_redirect_next_survey="0" theme="" text_size="1" font_family="16" theme_text_buttons="" theme_bg_page="" theme_text_title="" theme_bg_title="" theme_text_sectionheader="" theme_bg_sectionheader="" theme_text_question="" theme_bg_question="" enhanced_choices="0" repeat_survey_enabled="0" repeat_survey_btn_text="" repeat_survey_btn_location="AFTER_SUBMIT" response_limit="" response_limit_include_partials="1" response_limit_custom_text="Thank you for your interest; however, the survey is closed because the maximum number of responses has been reached." survey_time_limit_days="" survey_time_limit_hours="" survey_time_limit_minutes="" email_participant_field="" end_of_survey_pdf_download="1" pdf_auto_archive="0" pdf_econsent_version="" pdf_econsent_type="" pdf_econsent_firstname_field="" pdf_econsent_firstname_event_id="" pdf_econsent_lastname_field="" pdf_econsent_lastname_event_id="" pdf_econsent_dob_field="" pdf_econsent_dob_event_id="" pdf_econsent_allow_edit="0" pdf_econsent_signature_field1="" pdf_econsent_signature_field2="" pdf_econsent_signature_field3="" pdf_econsent_signature_field4="" pdf_econsent_signature_field5=""/>
 	</redcap:SurveysGroup>
 </GlobalVariables>
-<MetaDataVersion OID="Metadata.PDFActionTagsDemo_2019-12-06_1135" Name="PDF Action Tags Demo" redcap:RecordIdField="record_id">
-	<FormDef OID="Form.my_first_instrument" Name="My First Instrument" Repeating="No" redcap:FormName="my_first_instrument">
-		<ItemGroupRef ItemGroupOID="my_first_instrument.record_id" Mandatory="No"/>
-		<ItemGroupRef ItemGroupOID="my_first_instrument.my_first_instrument_timestamp" Mandatory="No"/>
-		<ItemGroupRef ItemGroupOID="my_first_instrument.my_first_instrument_complete" Mandatory="No"/>
+<MetaDataVersion OID="Metadata.PDFActionTagsTest_2020-04-13_2335" Name="PDF @ActionTags Test" redcap:RecordIdField="record_id">
+	<Protocol>
+		<StudyEventRef StudyEventOID="Event.nonrepeating_arm_1" OrderNumber="1" Mandatory="No"/>
+		<StudyEventRef StudyEventOID="Event.repeating_arm_1" OrderNumber="2" Mandatory="No"/>
+	</Protocol>
+	<StudyEventDef OID="Event.nonrepeating_arm_1" Name="Nonrepeating" Type="Common" Repeating="No" redcap:EventName="Nonrepeating" redcap:CustomEventLabel="" redcap:UniqueEventName="nonrepeating_arm_1" redcap:ArmNum="1" redcap:ArmName="Arm 1" redcap:DayOffset="1" redcap:OffsetMin="0" redcap:OffsetMax="0">
+		<FormRef FormOID="Form.first_instrument" OrderNumber="1" Mandatory="No" redcap:FormName="first_instrument"/>
+		<FormRef FormOID="Form.second_instrument" OrderNumber="2" Mandatory="No" redcap:FormName="second_instrument"/>
+	</StudyEventDef>
+	<StudyEventDef OID="Event.repeating_arm_1" Name="Repeating" Type="Common" Repeating="No" redcap:EventName="Repeating" redcap:CustomEventLabel="" redcap:UniqueEventName="repeating_arm_1" redcap:ArmNum="1" redcap:ArmName="Arm 1" redcap:DayOffset="2" redcap:OffsetMin="0" redcap:OffsetMax="0">
+		<FormRef FormOID="Form.second_instrument" OrderNumber="1" Mandatory="No" redcap:FormName="second_instrument"/>
+		<FormRef FormOID="Form.third_instrument" OrderNumber="2" Mandatory="No" redcap:FormName="third_instrument"/>
+	</StudyEventDef>
+	<FormDef OID="Form.first_instrument" Name="First Instrument" Repeating="No" redcap:FormName="first_instrument">
+		<ItemGroupRef ItemGroupOID="first_instrument.record_id" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="first_instrument.first_instrument_timestamp" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="first_instrument.first_instrument_complete" Mandatory="No"/>
 	</FormDef>
-	<FormDef OID="Form.second_instrument" Name="Second instrument" Repeating="No" redcap:FormName="second_instrument">
+	<FormDef OID="Form.second_instrument" Name="Second Instrument" Repeating="No" redcap:FormName="second_instrument">
 		<ItemGroupRef ItemGroupOID="second_instrument.desc_page2" Mandatory="No"/>
 		<ItemGroupRef ItemGroupOID="second_instrument.second_instrument_complete" Mandatory="No"/>
 	</FormDef>
-	<ItemGroupDef OID="my_first_instrument.record_id" Name="My First Instrument" Repeating="No">
+	<FormDef OID="Form.third_instrument" Name="Third Instrument" Repeating="No" redcap:FormName="third_instrument">
+		<ItemGroupRef ItemGroupOID="third_instrument.desc_page3" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="third_instrument.third_instrument_complete" Mandatory="No"/>
+	</FormDef>
+	<ItemGroupDef OID="first_instrument.record_id" Name="First Instrument" Repeating="No">
 		<ItemRef ItemOID="record_id" Mandatory="No" redcap:Variable="record_id"/>
 		<ItemRef ItemOID="redcap_survey_identifier" Mandatory="No" redcap:Variable="redcap_survey_identifier"/>
-		<ItemRef ItemOID="my_first_instrument_timestamp" Mandatory="No" redcap:Variable="my_first_instrument_timestamp"/>
+		<ItemRef ItemOID="first_instrument_timestamp" Mandatory="No" redcap:Variable="first_instrument_timestamp"/>
 	</ItemGroupDef>
-	<ItemGroupDef OID="my_first_instrument.my_first_instrument_timestamp" Name="My First Instrument" Repeating="No">
-		<ItemRef ItemOID="my_first_instrument_timestamp" Mandatory="No" redcap:Variable="my_first_instrument_timestamp"/>
+	<ItemGroupDef OID="first_instrument.first_instrument_timestamp" Name="First Instrument" Repeating="No">
+		<ItemRef ItemOID="first_instrument_timestamp" Mandatory="No" redcap:Variable="first_instrument_timestamp"/>
+		<ItemRef ItemOID="testcase" Mandatory="No" redcap:Variable="testcase"/>
 		<ItemRef ItemOID="desc1" Mandatory="No" redcap:Variable="desc1"/>
 		<ItemRef ItemOID="field1" Mandatory="No" redcap:Variable="field1"/>
 		<ItemRef ItemOID="desc2" Mandatory="No" redcap:Variable="desc2"/>
@@ -61,10 +79,10 @@
 		<ItemRef ItemOID="field8" Mandatory="No" redcap:Variable="field8"/>
 		<ItemRef ItemOID="field9" Mandatory="No" redcap:Variable="field9"/>
 	</ItemGroupDef>
-	<ItemGroupDef OID="my_first_instrument.my_first_instrument_complete" Name="Form Status" Repeating="No">
-		<ItemRef ItemOID="my_first_instrument_complete" Mandatory="No" redcap:Variable="my_first_instrument_complete"/>
+	<ItemGroupDef OID="first_instrument.first_instrument_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="first_instrument_complete" Mandatory="No" redcap:Variable="first_instrument_complete"/>
 	</ItemGroupDef>
-	<ItemGroupDef OID="second_instrument.desc_page2" Name="Second instrument" Repeating="No">
+	<ItemGroupDef OID="second_instrument.desc_page2" Name="Second Instrument" Repeating="No">
 		<ItemRef ItemOID="desc_page2" Mandatory="No" redcap:Variable="desc_page2"/>
 		<ItemRef ItemOID="data_page2" Mandatory="No" redcap:Variable="data_page2"/>
 		<ItemRef ItemOID="p2_field1" Mandatory="No" redcap:Variable="p2_field1"/>
@@ -73,17 +91,30 @@
 	<ItemGroupDef OID="second_instrument.second_instrument_complete" Name="Form Status" Repeating="No">
 		<ItemRef ItemOID="second_instrument_complete" Mandatory="No" redcap:Variable="second_instrument_complete"/>
 	</ItemGroupDef>
+	<ItemGroupDef OID="third_instrument.desc_page3" Name="Third Instrument" Repeating="No">
+		<ItemRef ItemOID="desc_page3" Mandatory="No" redcap:Variable="desc_page3"/>
+		<ItemRef ItemOID="data_page3" Mandatory="No" redcap:Variable="data_page3"/>
+		<ItemRef ItemOID="p3_field1" Mandatory="No" redcap:Variable="p3_field1"/>
+		<ItemRef ItemOID="p3_field2" Mandatory="No" redcap:Variable="p3_field2"/>
+		<ItemRef ItemOID="p3_field3" Mandatory="No" redcap:Variable="p3_field3"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="third_instrument.third_instrument_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="third_instrument_complete" Mandatory="No" redcap:Variable="third_instrument_complete"/>
+	</ItemGroupDef>
 	<ItemDef OID="record_id" Name="record_id" DataType="text" Length="999" redcap:Variable="record_id" redcap:FieldType="text">
 		<Question><TranslatedText>Record ID</TranslatedText></Question>
 	</ItemDef>
 	<ItemDef OID="redcap_survey_identifier" Name="redcap_survey_identifier" DataType="text" Length="999" redcap:Variable="redcap_survey_identifier">
 		<Question><TranslatedText>Survey Identifier</TranslatedText></Question>
 	</ItemDef>
-	<ItemDef OID="my_first_instrument_timestamp" Name="my_first_instrument_timestamp" DataType="datetime" Length="999" redcap:Variable="my_first_instrument_timestamp">
+	<ItemDef OID="first_instrument_timestamp" Name="first_instrument_timestamp" DataType="datetime" Length="999" redcap:Variable="first_instrument_timestamp">
 		<Question><TranslatedText>Survey Timestamp</TranslatedText></Question>
 	</ItemDef>
-	<ItemDef OID="my_first_instrument_timestamp" Name="my_first_instrument_timestamp" DataType="datetime" Length="999" redcap:Variable="my_first_instrument_timestamp">
+	<ItemDef OID="first_instrument_timestamp" Name="first_instrument_timestamp" DataType="datetime" Length="999" redcap:Variable="first_instrument_timestamp">
 		<Question><TranslatedText>Survey Timestamp</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="testcase" Name="testcase" DataType="text" Length="999" redcap:Variable="testcase" redcap:FieldType="text">
+		<Question><TranslatedText>Description of test</TranslatedText></Question>
 	</ItemDef>
 	<ItemDef OID="desc1" Name="desc1" DataType="text" Length="999" redcap:Variable="desc1" redcap:FieldType="descriptive">
 		<Question><TranslatedText>The field below, field 1, will always be shown.</TranslatedText></Question>
@@ -129,7 +160,7 @@ Depending on the type of PDF, blank or with data, this field will have one of th
 </TranslatedText></Question>
 	</ItemDef>
 	<ItemDef OID="desc6" Name="desc6" DataType="text" Length="999" redcap:Variable="desc6" redcap:FieldType="descriptive">
-		<Question><TranslatedText>The field below, field 6, will always show it&#039;s 3 options.</TranslatedText></Question>
+		<Question><TranslatedText>The field below, field 6, will always show its 3 options.</TranslatedText></Question>
 	</ItemDef>
 	<ItemDef OID="field6" Name="field6" DataType="text" Length="1" redcap:Variable="field6" redcap:FieldType="radio">
 		<Question><TranslatedText>Field 6 - always showing all options</TranslatedText></Question>
@@ -139,41 +170,72 @@ Depending on the type of PDF, blank or with data, this field will have one of th
 		<Question><TranslatedText>Fields 7, 8, and 9 will show their options depending on context.</TranslatedText></Question>
 	</ItemDef>
 	<ItemDef OID="field7" Name="field7" DataType="text" Length="1" redcap:Variable="field7" redcap:FieldType="radio" redcap:FieldAnnotation="@PDF-NOENUM">
-		<Question><TranslatedText>Field 7 - never showing all options: @PDF-NOENUM</TranslatedText></Question>
+		<Question><TranslatedText>Field 7 - never showing the options
+@PDF-NOENUM</TranslatedText></Question>
 		<CodeListRef CodeListOID="field7.choices"/>
 	</ItemDef>
 	<ItemDef OID="field8" Name="field8" DataType="text" Length="1" redcap:Variable="field8" redcap:FieldType="radio" redcap:FieldAnnotation="@PDF-NOENUM=&quot;data&quot;">
-		<Question><TranslatedText>Field 8 - shown on blank PDFs, not shown on data PDFs: @PDF-NOENUM=&quot;data&quot;</TranslatedText></Question>
+		<Question><TranslatedText>Field 8 - options shown on blank PDFs only
+@PDF-NOENUM=&quot;data&quot;</TranslatedText></Question>
 		<CodeListRef CodeListOID="field8.choices"/>
 	</ItemDef>
 	<ItemDef OID="field9" Name="field9" DataType="text" Length="1" redcap:Variable="field9" redcap:FieldType="radio" redcap:FieldAnnotation="@PDF-NOENUM=&quot;blank&quot;">
-		<Question><TranslatedText>Field 9 - shown on data PDFs, not shown on blank PDFs: @PDF-NOENUM=&quot;blank&quot;</TranslatedText></Question>
+		<Question><TranslatedText>Field 9 - options shown on data PDFs only
+@PDF-NOENUM=&quot;blank&quot;</TranslatedText></Question>
 		<CodeListRef CodeListOID="field9.choices"/>
 	</ItemDef>
-	<ItemDef OID="my_first_instrument_complete" Name="my_first_instrument_complete" DataType="text" Length="1" redcap:Variable="my_first_instrument_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+	<ItemDef OID="first_instrument_complete" Name="first_instrument_complete" DataType="text" Length="1" redcap:Variable="first_instrument_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
 		<Question><TranslatedText>Complete?</TranslatedText></Question>
-		<CodeListRef CodeListOID="my_first_instrument_complete.choices"/>
+		<CodeListRef CodeListOID="first_instrument_complete.choices"/>
 	</ItemDef>
 	<ItemDef OID="desc_page2" Name="desc_page2" DataType="text" Length="999" redcap:Variable="desc_page2" redcap:FieldType="descriptive">
-		<Question><TranslatedText>This is a second instrument. It&#039;s purposes are:
-- provide a second page
-- with a repeating instrument
-- uses @PDF-NOENUM</TranslatedText></Question>
+		<Question><TranslatedText>This is a second instrument. 
+- It provide a second page
+- It is repeating instrument (for itself and within a repeating event)
+- It uses @PDF-NOENUM</TranslatedText></Question>
 	</ItemDef>
 	<ItemDef OID="data_page2" Name="data_page2" DataType="text" Length="999" redcap:Variable="data_page2" redcap:FieldType="text">
 		<Question><TranslatedText>Account of the data entered on this form (set both fields to the same option)</TranslatedText></Question>
 	</ItemDef>
 	<ItemDef OID="p2_field1" Name="p2_field1" DataType="text" Length="1" redcap:Variable="p2_field1" redcap:FieldType="radio">
-		<Question><TranslatedText>Field 1 </TranslatedText></Question>
+		<Question><TranslatedText>Field 1 - showing the options</TranslatedText></Question>
 		<CodeListRef CodeListOID="p2_field1.choices"/>
 	</ItemDef>
 	<ItemDef OID="p2_field2" Name="p2_field2" DataType="text" Length="1" redcap:Variable="p2_field2" redcap:FieldType="radio" redcap:FieldAnnotation="@PDF-NOENUM">
-		<Question><TranslatedText>Field 2 - @PDF-NOENUM</TranslatedText></Question>
+		<Question><TranslatedText>Field 2 - not showing the options
+@PDF-NOENUM</TranslatedText></Question>
 		<CodeListRef CodeListOID="p2_field2.choices"/>
 	</ItemDef>
 	<ItemDef OID="second_instrument_complete" Name="second_instrument_complete" DataType="text" Length="1" redcap:Variable="second_instrument_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
 		<Question><TranslatedText>Complete?</TranslatedText></Question>
 		<CodeListRef CodeListOID="second_instrument_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="desc_page3" Name="desc_page3" DataType="text" Length="999" redcap:Variable="desc_page3" redcap:FieldType="descriptive">
+		<Question><TranslatedText>This is a third instrument. 
+- It provide a third page
+- It is within a repeating event
+- It uses @PDF-NOENUM</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="data_page3" Name="data_page3" DataType="text" Length="999" redcap:Variable="data_page3" redcap:FieldType="text">
+		<Question><TranslatedText>Account of the data entered on this form (set both fields to the same option)
+
+There is a field 3-3, but it should never be shown.</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="p3_field1" Name="p3_field1" DataType="text" Length="1" redcap:Variable="p3_field1" redcap:FieldType="radio" redcap:FieldAnnotation="@PDF-NOENUM">
+		<Question><TranslatedText>Field 3-1 - not showing the options</TranslatedText></Question>
+		<CodeListRef CodeListOID="p3_field1.choices"/>
+	</ItemDef>
+	<ItemDef OID="p3_field2" Name="p3_field2" DataType="text" Length="1" redcap:Variable="p3_field2" redcap:FieldType="radio">
+		<Question><TranslatedText>Field 3-2 - showing the options</TranslatedText></Question>
+		<CodeListRef CodeListOID="p3_field2.choices"/>
+	</ItemDef>
+	<ItemDef OID="p3_field3" Name="p3_field3" DataType="text" Length="1" redcap:Variable="p3_field3" redcap:FieldType="radio" redcap:FieldAnnotation="@PDF-HIDDEN">
+		<Question><TranslatedText>Field 3-3 - not shown at all</TranslatedText></Question>
+		<CodeListRef CodeListOID="p3_field3.choices"/>
+	</ItemDef>
+	<ItemDef OID="third_instrument_complete" Name="third_instrument_complete" DataType="text" Length="1" redcap:Variable="third_instrument_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="third_instrument_complete.choices"/>
 	</ItemDef>
 	<CodeList OID="field6.choices" Name="field6" DataType="text" redcap:Variable="field6">
 		<CodeListItem CodedValue="1"><Decode><TranslatedText>Option 1</TranslatedText></Decode></CodeListItem>
@@ -195,41 +257,63 @@ Depending on the type of PDF, blank or with data, this field will have one of th
 		<CodeListItem CodedValue="2"><Decode><TranslatedText>Option 2</TranslatedText></Decode></CodeListItem>
 		<CodeListItem CodedValue="3"><Decode><TranslatedText>Option 3</TranslatedText></Decode></CodeListItem>
 	</CodeList>
-	<CodeList OID="my_first_instrument_complete.choices" Name="my_first_instrument_complete" DataType="text" redcap:Variable="my_first_instrument_complete">
+	<CodeList OID="first_instrument_complete.choices" Name="first_instrument_complete" DataType="text" redcap:Variable="first_instrument_complete">
 		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
 		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
 		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
 	</CodeList>
 	<CodeList OID="p2_field1.choices" Name="p2_field1" DataType="text" redcap:Variable="p2_field1">
-		<CodeListItem CodedValue="1"><Decode><TranslatedText>Option 1</TranslatedText></Decode></CodeListItem>
-		<CodeListItem CodedValue="2"><Decode><TranslatedText>Option 2</TranslatedText></Decode></CodeListItem>
-		<CodeListItem CodedValue="3"><Decode><TranslatedText>Option 3</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Option 21</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Option 22</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>Option 23</TranslatedText></Decode></CodeListItem>
 	</CodeList>
 	<CodeList OID="p2_field2.choices" Name="p2_field2" DataType="text" redcap:Variable="p2_field2">
-		<CodeListItem CodedValue="1"><Decode><TranslatedText>Option 1</TranslatedText></Decode></CodeListItem>
-		<CodeListItem CodedValue="2"><Decode><TranslatedText>Option 2</TranslatedText></Decode></CodeListItem>
-		<CodeListItem CodedValue="3"><Decode><TranslatedText>Option 3</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Option 21</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Option 22</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>Option 23</TranslatedText></Decode></CodeListItem>
 	</CodeList>
 	<CodeList OID="second_instrument_complete.choices" Name="second_instrument_complete" DataType="text" redcap:Variable="second_instrument_complete">
 		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
 		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
 		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
 	</CodeList>
+	<CodeList OID="p3_field1.choices" Name="p3_field1" DataType="text" redcap:Variable="p3_field1">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Option 31</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Option 32</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>Option 33</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="p3_field2.choices" Name="p3_field2" DataType="text" redcap:Variable="p3_field2">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Option 31</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Option 32</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>Option 33</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="p3_field3.choices" Name="p3_field3" DataType="text" redcap:Variable="p3_field3">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Option 31</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Option 32</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>Option 33</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="third_instrument_complete.choices" Name="third_instrument_complete" DataType="text" redcap:Variable="third_instrument_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
 </MetaDataVersion>
 </Study>
-<ClinicalData StudyOID="Project.PDFActionTagsDemo" MetaDataVersionOID="Metadata.PDFActionTagsDemo_2019-12-06_1135">
+<ClinicalData StudyOID="Project.PDFActionTagsTest" MetaDataVersionOID="Metadata.PDFActionTagsTest_2020-04-13_2335">
 	<SubjectData SubjectKey="1" redcap:RecordIdField="record_id">
-			<FormData FormOID="Form.my_first_instrument" FormRepeatKey="1">
-				<ItemGroupData ItemGroupOID="my_first_instrument.record_id" ItemGroupRepeatKey="1">
+		<StudyEventData StudyEventOID="Event.nonrepeating_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="nonrepeating_arm_1">
+			<FormData FormOID="Form.first_instrument" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="first_instrument.record_id" ItemGroupRepeatKey="1">
 					<ItemData ItemOID="record_id" Value="1"/>
+					<ItemData ItemOID="testcase" Value="First, 3x Second"/>
 					<ItemData ItemOID="field1" Value="Record 1"/>
 					<ItemData ItemOID="field6" Value="1"/>
 					<ItemData ItemOID="field7" Value="1"/>
 					<ItemData ItemOID="field8" Value="1"/>
 					<ItemData ItemOID="field9" Value="1"/>
 				</ItemGroupData>
-				<ItemGroupData ItemGroupOID="my_first_instrument.my_first_instrument_complete" ItemGroupRepeatKey="1">
-					<ItemData ItemOID="my_first_instrument_complete" Value="2"/>
+				<ItemGroupData ItemGroupOID="first_instrument.first_instrument_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="first_instrument_complete" Value="2"/>
 				</ItemGroupData>
 			</FormData>
 			<FormData FormOID="Form.second_instrument" FormRepeatKey="1">
@@ -262,19 +346,91 @@ Depending on the type of PDF, blank or with data, this field will have one of th
 					<ItemData ItemOID="second_instrument_complete" Value="2"/>
 				</ItemGroupData>
 			</FormData>
+		</StudyEventData>
+		<StudyEventData StudyEventOID="Event.repeating_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="repeating_arm_1">
+			<FormData FormOID="Form.second_instrument" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="second_instrument.data_page2" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_page2" Value="Record 1 - Repeat Event 1 - Second"/>
+					<ItemData ItemOID="p2_field1" Value="1"/>
+					<ItemData ItemOID="p2_field2" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="second_instrument.second_instrument_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="second_instrument_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.third_instrument" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="third_instrument.data_page3" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_page3" Value="Record 1 - Repeat Event 1 - Third"/>
+					<ItemData ItemOID="p3_field1" Value="1"/>
+					<ItemData ItemOID="p3_field2" Value="1"/>
+					<ItemData ItemOID="p3_field3" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="third_instrument.third_instrument_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="third_instrument_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
+		<StudyEventData StudyEventOID="Event.repeating_arm_1" StudyEventRepeatKey="2" redcap:UniqueEventName="repeating_arm_1">
+			<FormData FormOID="Form.second_instrument" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="second_instrument.data_page2" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_page2" Value="Record 1 - Repeat Event 2 - Second"/>
+					<ItemData ItemOID="p2_field1" Value="2"/>
+					<ItemData ItemOID="p2_field2" Value="2"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="second_instrument.second_instrument_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="second_instrument_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.third_instrument" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="third_instrument.data_page3" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_page3" Value="Record 1 - Repeat Event 2 - Third"/>
+					<ItemData ItemOID="p3_field1" Value="2"/>
+					<ItemData ItemOID="p3_field2" Value="2"/>
+					<ItemData ItemOID="p3_field3" Value="2"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="third_instrument.third_instrument_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="third_instrument_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
+		<StudyEventData StudyEventOID="Event.repeating_arm_1" StudyEventRepeatKey="3" redcap:UniqueEventName="repeating_arm_1">
+			<FormData FormOID="Form.second_instrument" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="second_instrument.data_page2" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_page2" Value="Record 1 - Repeat Event 3 - Second"/>
+					<ItemData ItemOID="p2_field1" Value="3"/>
+					<ItemData ItemOID="p2_field2" Value="3"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="second_instrument.second_instrument_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="second_instrument_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.third_instrument" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="third_instrument.data_page3" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_page3" Value="Record 1 - Repeat Event 3 - Third"/>
+					<ItemData ItemOID="p3_field1" Value="3"/>
+					<ItemData ItemOID="p3_field2" Value="3"/>
+					<ItemData ItemOID="p3_field3" Value="3"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="third_instrument.third_instrument_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="third_instrument_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
 	</SubjectData>
 	<SubjectData SubjectKey="2" redcap:RecordIdField="record_id">
-			<FormData FormOID="Form.my_first_instrument" FormRepeatKey="1">
-				<ItemGroupData ItemGroupOID="my_first_instrument.record_id" ItemGroupRepeatKey="1">
+		<StudyEventData StudyEventOID="Event.nonrepeating_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="nonrepeating_arm_1">
+			<FormData FormOID="Form.first_instrument" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="first_instrument.record_id" ItemGroupRepeatKey="1">
 					<ItemData ItemOID="record_id" Value="2"/>
+					<ItemData ItemOID="testcase" Value="First, 1x Second"/>
 					<ItemData ItemOID="field1" Value="Record 2"/>
 					<ItemData ItemOID="field6" Value="2"/>
 					<ItemData ItemOID="field7" Value="2"/>
 					<ItemData ItemOID="field8" Value="2"/>
 					<ItemData ItemOID="field9" Value="2"/>
 				</ItemGroupData>
-				<ItemGroupData ItemGroupOID="my_first_instrument.my_first_instrument_complete" ItemGroupRepeatKey="1">
-					<ItemData ItemOID="my_first_instrument_complete" Value="2"/>
+				<ItemGroupData ItemGroupOID="first_instrument.first_instrument_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="first_instrument_complete" Value="2"/>
 				</ItemGroupData>
 			</FormData>
 			<FormData FormOID="Form.second_instrument" FormRepeatKey="1">
@@ -287,13 +443,38 @@ Depending on the type of PDF, blank or with data, this field will have one of th
 					<ItemData ItemOID="second_instrument_complete" Value="2"/>
 				</ItemGroupData>
 			</FormData>
+		</StudyEventData>
+		<StudyEventData StudyEventOID="Event.repeating_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="repeating_arm_1">
+			<FormData FormOID="Form.second_instrument" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="second_instrument.data_page2" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_page2" Value="Record 2 - Repeat Event 1"/>
+					<ItemData ItemOID="p2_field1" Value="1"/>
+					<ItemData ItemOID="p2_field2" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="second_instrument.second_instrument_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="second_instrument_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.third_instrument" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="third_instrument.data_page3" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_page3" Value="Record 2 - Repeat Event 1 - Third"/>
+					<ItemData ItemOID="p3_field1" Value="1"/>
+					<ItemData ItemOID="p3_field2" Value="1"/>
+					<ItemData ItemOID="p3_field3" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="third_instrument.third_instrument_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="third_instrument_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
 	</SubjectData>
 	<SubjectData SubjectKey="3" redcap:RecordIdField="record_id">
-			<FormData FormOID="Form.my_first_instrument" FormRepeatKey="1">
-				<ItemGroupData ItemGroupOID="my_first_instrument.record_id" ItemGroupRepeatKey="1">
+		<StudyEventData StudyEventOID="Event.nonrepeating_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="nonrepeating_arm_1">
+			<FormData FormOID="Form.first_instrument" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="first_instrument.record_id" ItemGroupRepeatKey="1">
 					<ItemData ItemOID="record_id" Value="3"/>
-					<ItemData ItemOID="my_first_instrument_timestamp" Value="2019-12-06 11:33:45"/>
-					<ItemData ItemOID="field1" Value="1"/>
+					<ItemData ItemOID="testcase" Value="First only"/>
+					<ItemData ItemOID="field1" Value="Record 3"/>
 					<ItemData ItemOID="field2" Value="2"/>
 					<ItemData ItemOID="field3" Value="3"/>
 					<ItemData ItemOID="field4" Value="4"/>
@@ -303,10 +484,11 @@ Depending on the type of PDF, blank or with data, this field will have one of th
 					<ItemData ItemOID="field8" Value="1"/>
 					<ItemData ItemOID="field9" Value="1"/>
 				</ItemGroupData>
-				<ItemGroupData ItemGroupOID="my_first_instrument.my_first_instrument_complete" ItemGroupRepeatKey="1">
-					<ItemData ItemOID="my_first_instrument_complete" Value="2"/>
+				<ItemGroupData ItemGroupOID="first_instrument.first_instrument_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="first_instrument_complete" Value="2"/>
 				</ItemGroupData>
 			</FormData>
+		</StudyEventData>
 	</SubjectData>
 </ClinicalData>
 </ODM>
