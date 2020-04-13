@@ -1,12 +1,10 @@
-# REDCap PDF @ActionTags
+# PDF @ActionTags
 
 A REDCap External Module that provides action tags for controlling PDF output.
 
-Please see the [CHANGELOG](?prefix=redcap_pdf_actiontags&page=CHANGELOG.md) to learn about changes and bugfixes. Version 2.0.0 takes advantage of the new `redcap_pdf` hook, which removed all previous limitations.
+**Note** that through the introduction of the _native_ `@HIDDEN-PDF` action tag, the one provided by this module will not work when used with the `blank` or `data` modifier (as the REDCap-provided action tag will force this to always be `all`). Thus, if you have been using this tag with one of those modifiers, replace it with the alternative `@PDF-HIDDEN`.
 
-**Note**, however, that through the introduction of the _native_ `@HIDDEN-PDF` action tag, the one provided by this module will not work when used with the `blank` or `data` modifier (as the REDCap-provided action tag will force this to always be `all`). Thus, if you have been using this tag with one of those modifiers, replace it with the alternative `@PDF-HIDDEN`.
-
-To test the features of this module, use this [test project](?prefix=redcap_pdf_actiontags&page=Demo/TestProject.xml) (XML metadata and data).
+<span style="color:red">**WARNING:**</span> The current state of the `redcap_pdf` hook (up to at least REDCap 9.8.2) does not allow multiple modules implementing this hook to be active concurrently in a project. When using two or more such modules in a project, the _last to execute_ will _win_ and only its effects will be reflected in the generated PDFs!
 
 ## Requirements
 
@@ -14,7 +12,7 @@ To test the features of this module, use this [test project](?prefix=redcap_pdf_
 
 ## How It Works
 
-This module intercepts calls to the PDF generating function of REDCap and modifies the data dictionary and/or the data to fit what has been set via the action tags provided by this module.
+This module implements the `redcap_pdf` hook, i.e. it modifies the data dictionary and/or the data to fit what has been set via the action tags provided by this module. REDCap then generates the PDF based on these modified information.
 
 ## Installation
 
@@ -51,3 +49,20 @@ Note, some action tags will only affect rendering of _blank_ PDFs and will not w
 - `@PDF-WHITESPACE="number of lines"`
 
   When present, the given number of empty lines will be added to a field's label, pushing down the next field on the page. The number of lines must be a positive integer. **This action tag only affects blank PDFs!**
+
+## Testing
+
+Instructions for testing the module can be found [here](?prefix=redcap_pdf_actiontags&page=tests/PDFActionTagsManualTest.md).
+To test the features of this module, use this [test project](?prefix=redcap_pdf_actiontags&page=Demo/TestProject.xml) (XML metadata and data).
+
+## Changelog
+
+Version | Description
+------- | ----------------
+v2.1.0  | Major bugfix: @PDF-NOENUM now works properly with repeating instruments/events.<br>Update README (integrate changelog).<br>Add instructions for testing the module.
+v2.0.0  | Use the new `redcap_pdf` hook that became available with REDCap 9.5.0. This means, the module now works in _any_ context.
+v1.1.3  | Bugfix: Add check to see if 'apache_setenv()' is available before calling it.
+v1.1.2  | Bugfix: Fix broken PDF links within the Online Designer.
+v1.1.1  | Bugfixes: Fix 404 error encountered when REDCap is installed in a subfolder of the webroot. Prevent issue with gzip compression (starting with REDCap >9.0.1, it seems the output of pages gets gzip'ed, including the PDFs generated when this module is active).
+v1.1.0  | **Breaking Changes:** The action tags `@PDF-HIDDENDATA` and `@PDF-HIDDENNODATA` are removed in this version since they cannot work on PDFs for all records. The action tags `@PDF-FIELDNOTEEMPTY` and `@PDF-FIELDNOTEDATA` are renamed to `@PDF-FIELDNOTE-BLANK` and `@PDF-FIELDNOTE-DATA`, respectively (to ave consistent naming and to improve readability).<br>Feature Updates: The behavior of some action tags is slightly altered. Add `@PDF-HIDDEN` as a synonym for `@HIDDEN-PDF`. Allow control of the scope of some action tags by adding a parameter that limits them to affect all types of PDFs (_all_), blank PDFs only (_blank_), or PDFs with saved data only (_data_).<br>Bugfixes: Fix issue that not all PDF-generating links were replaced on Data Entry pages. Fix issue that action tag info would get added multiple times to the 'What are Action Tags?' popup in REDCap instances with active Messenger.
+v1.0.0  | Initial release.
