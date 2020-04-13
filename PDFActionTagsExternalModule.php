@@ -44,7 +44,7 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
      */
     function redcap_pdf($project_id, $metadata, $data, $instrument, $record, $event_id, $instance = 1) {
 
-        $metadata = self::applyActiontags($metadata, $data);
+        self::applyActiontags($metadata, $data);
 
         return array('metadata'=>$metadata, 'data'=>$data);
     }
@@ -79,7 +79,7 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
      * @param $Data array The data array from redcap/PDF/index.php
      * @return array A filtered metadata arry. Use this to replace $metadata just before passing to renderPDF at the bottom of redcap/PDF/index.php
      */
-    private static function applyActiontags($metadata, &$Data)
+    private static function applyActiontags(&$metadata, &$Data)
     {
         // List of element types that support the @PDF-NOENUM actiontag
         $noenum_supported_types = array ( 'sql', 'select', 'radio' );
@@ -133,7 +133,7 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
                 if ($apply) {
                 // Check if data is present and if so, replace key values with data from the enums.
                     if (!$blank) {
-                        // Make the enum 'accessible'.
+                        // Extract the enum values to be available for data replacement.
                         $enumvalues = array();
                         $lines = explode("\\n", $attr['element_enum']);
                         foreach ($lines as $l) {
@@ -142,11 +142,24 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
                             $value = trim($kv[1]);
                             $enumvalues[$key] = $value;
                         }
-                        // Replace data value with text from enum.
+                        // Replace enum code values with corresponding text values.
                         foreach ($Data as $this_record => &$event_data) {
+                            // Repeat instance (instrument or entire event)?
+                            if (array_key_exists("repeat_instances", $event_data)) {
+                                foreach ($event_data["repeat_instances"] as $event_id => &$repeat_data) {
+                                    foreach ($repeat_data as $instrument => &$instrument_data) {
+                                        foreach ($instrument_data as $this_instance => &$field_data) {
+                                            $keyvalue = $field_data[$attr['field_name']];
+                                            if ($keyvalue != '') {
+                                                $field_data[$attr['field_name']] = $enumvalues[$keyvalue];
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            // Regular, non-repeating data.
                             foreach ($event_data as $this_event_id => &$field_data) {
                                 $keyvalue = $field_data[$attr['field_name']];
-                                // if value is not blank
                                 if ($keyvalue != '') {
                                     $field_data[$attr['field_name']] = $enumvalues[$keyvalue];
                                 }
@@ -181,6 +194,6 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
                 $filtered_metadata[] = $attr;
             }
         }
-        return $filtered_metadata;
+        $metadata = $filtered_metadata;
     }
 }
