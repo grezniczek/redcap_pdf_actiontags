@@ -4,7 +4,9 @@ A REDCap External Module that provides action tags for controlling PDF output.
 
 **Note** that through the introduction of the _native_ `@HIDDEN-PDF` action tag, the one provided by this module will not work when used with the `blank` or `data` modifier (as the REDCap-provided action tag will force this to always be `all`). Thus, if you have been using this tag with one of those modifiers, replace it with the alternative `@PDF-HIDDEN`.
 
-<span style="color:red">**WARNING:**</span> The current state of the `redcap_pdf` hook (up to at least REDCap 9.8.2) does not allow multiple modules implementing this hook to be active concurrently in a project. When using two or more such modules in a project, the _last to execute_ will _win_ and only its effects will be reflected in the generated PDFs!
+<span style="color:red">**WARNING:**</span> The current state of the `redcap_pdf` hook (up to at least REDCap 9.8.2) does not allow multiple modules implementing this hook to be active concurrently in a project. When using two or more such modules in a project, the _last to execute_ will _win_ and only its effects will be reflected in the generated PDFs!  
+Note that this includes the classic hook function implementation as well. If there is a classic hook implementation of `redcap_pdf` that is returning data and/or metadata, it will override and thereby "disable" any module implementations.  
+This is the case in the standard `hook_functions.php` file. So in order for any module implementing `redcap_pdf` to work at all, you **have to comment out the return statement in the hook file**!
 
 ## Requirements
 
