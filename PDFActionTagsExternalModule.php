@@ -26,7 +26,8 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
                 "{PDF-NOENUM}" => $this->tt("pdf_noenum_desc"),
                 "{PDF-FIELDNOTE-BLANK}" => $this->tt("pdf_fieldnote_blank_desc"),
                 "{PDF-FIELDNOTE-DATA}" => $this->tt("pdf_fieldnote_data_desc"),
-                "{PDF-WHITESPACE}" => $this->tt("pdf_whitespace_desc")
+                "{PDF-WHITESPACE}" => $this->tt("pdf_whitespace_desc"),
+                "{PDF-INDENT}" => $this->tt("pdf_indent_desc")
             );
             print str_replace(array_keys($replace), array_values($replace), $template);
         }
@@ -115,10 +116,44 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
                 // Get parameter value.
                 $param = self::getActiontagParam($attr['misc'], '@PDF-WHITESPACE');
                 if (is_numeric($param)) {
-                    $n = max(0, (int)$param); // no negativ values!
+                    $n = max(0, (int)$param); // no negative values!
                     // insert placeholder data
                     $whitespace = str_repeat("\n", $n);
                     $attr['element_label'] = $attr['element_label'].$whitespace . "&nbsp;";
+                }
+            }
+            
+            // @PDF-INDENT
+            if ($include && strpos($attr['misc'], '@PDF-INDENT=') !== false) {
+                // Get parameter values array
+                $params = explode(",", self::getActiontagParam($attr['misc'], '@PDF-INDENT'));
+				$param1 = $params[0]; //number of spaces to indent
+				$param2 = $params[1]; //number of characters wide
+					if ((is_numeric($param1)) && (is_numeric($param2))) {
+                    $n1 = max(0, (int)$param1); // no negative values!
+                    $n2 = max(0, (int)$param2); // no negative values!
+                    // number of spaces to indent
+                    $spaces = str_repeat(" ", $n1);
+					$linewidth = $n2;
+					// create array of words from element_label, remove all html
+					$words = explode(" ", strip_tags(br2nl(label_decode($attr['element_label']))));
+					$labelline = "";
+					$labellines = "";
+					// check each word for new lines, replace with new line and add space to the end
+					foreach ($words as $word) {
+						$newline = "\n";
+						//replacing new line with new line and space
+						$word = str_replace($newline, $newline.$spaces, $word);
+						$space = " ";
+						$labelline=$labelline.$word.$space;
+						// if current number of characters in labelline is >= specified amount then append to labellines along with indent and new line
+						if (strlen($labelline) >= $linewidth) {
+							$labellines = $labellines.$spaces.$labelline.$newline;
+							$labelline="";
+						}
+					// final element label with indent, words, and new lines
+                    $attr['element_label'] = $labellines.$spaces.$labelline.$newline;
+					}	
                 }
             }
 
