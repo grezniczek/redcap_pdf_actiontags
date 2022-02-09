@@ -12,7 +12,7 @@ class PDFActionTagsExternalModule extends AbstractExternalModule {
     function redcap_every_page_top($project_id = null) {
 
         // Do not run on non-project pages.
-        $project_id = empty($project_id) ? 0 : is_numeric($project_id) ? intval($project_id) : 0;
+        $project_id = empty($project_id) ? 0 : (is_numeric($project_id) ? intval($project_id) : 0);
         if ($project_id < 1) return;
 
         // Insert the action tag descriptions (only on Design)

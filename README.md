@@ -61,6 +61,7 @@ To test the features of this module, use this [test project](?prefix=redcap_pdf_
 
 Version | Description
 ------- | ----------------
+v2.1.1  | PHP8 compatibility fix.
 v2.1.0  | Major bugfix: @PDF-NOENUM now works properly with repeating instruments/events.<br>Update README (integrate changelog).<br>Add instructions for testing the module.
 v2.0.0  | Use the new `redcap_pdf` hook that became available with REDCap 9.5.0. This means, the module now works in _any_ context.
 v1.1.3  | Bugfix: Add check to see if 'apache_setenv()' is available before calling it.
